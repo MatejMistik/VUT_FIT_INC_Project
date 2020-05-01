@@ -1,0 +1,240 @@
+-- fsm.vhd: Finite State Machine
+-- Author(s): 
+--
+library ieee;
+use ieee.std_logic_1164.all;
+-- ----------------------------------------------------------------------------
+--                        Entity declaration
+-- ----------------------------------------------------------------------------
+entity fsm is
+port(
+   CLK         : in  std_logic;
+   RESET       : in  std_logic;
+
+   -- Input signals
+   KEY         : in  std_logic_vector(15 downto 0);
+   CNT_OF      : in  std_logic;
+
+   -- Output signals
+   FSM_CNT_CE  : out std_logic;
+   FSM_MX_MEM  : out std_logic;
+   FSM_MX_LCD  : out std_logic;
+   FSM_LCD_WR  : out std_logic;
+   FSM_LCD_CLR : out std_logic
+);
+end entity fsm;
+
+-- ----------------------------------------------------------------------------
+--                      Architecture declaration
+-- ----------------------------------------------------------------------------
+architecture behavioral of fsm is
+   type t_state is (TEST_CHAR_1, TEST_CHAR_2, TEST_CHAR_3, TEST_CHAR_4, TEST_CHAR_5, TEST_CHAR_6, TEST_CHAR_7, TEST_CHAR_8, TEST_CHAR_9, TEST_CHAR_10, TEST_ACCESS, INCORRECT_CHAR, PRINT_MESSAGE, PRINT_ACCESS_GRANTED, FINISH);
+   signal present_state, next_state : t_state;
+
+begin
+-- -------------------------------------------------------
+sync_logic : process(RESET, CLK)
+begin
+   if (RESET = '1') then
+      present_state <= TEST1;
+   elsif (CLK'event AND CLK = '1') then
+      present_state <= next_state;
+   end if;
+end process sync_logic;
+
+-- -------------------------------------------------------
+next_state_logic : process(present_state, KEY, CNT_OF)
+begin
+   case (present_state) is
+   -- - - - - - - - - - - - - - - - - - - - - - -
+   when TEST_CHAR_1 =>
+      next_state <= TEST_CHAR_1;
+      if (KEY(1) = '1') then
+		 option_1 := TRUE ;
+         next_state <= TEST_CHAR_2;
+      elsif (KEY(3) = '1') then
+		 option_2 := TRUE ;
+         next_state <= TEST_CHAR_2;
+      elsif (KEY(15) = '1') then
+         next_state <= PRINT_MESSAGE;
+	  elsif (KEY(14 downto 0) /= "000000000000000") then
+         next_state <= INCORRECT_CHAR;
+      end if;
+   -- - - - - - - - - - - - - - - - - - - - - - -
+   when TEST_CHAR_2 =>
+      next_state <= TEST2;
+      if (KEY(9) = '1') and (option_1 = TRUE ) then
+         next_state <= TEST_CHAR_3;
+      elsif (KEY(4) = '1') and (option_2 = TRUE ) then
+         next_state <= TEST_CHAR_3;
+      elsif (KEY(15) = '1') then
+         next_state <= PRINT_MESSAGE;
+	  elsif (KEY(14 downto 0) /= "000000000000000") then
+         next_state <= INCORRECT_CHAR;
+      end if;
+   -- - - - - - - - - - - - - - - - - - - - - - -
+   when TEST_CHAR_3 =>
+      next_state <= TEST3;
+      if (KEY(7) = '1') and (option_1 = TRUE) then
+         next_state <= TEST_CHAR_4;
+      elsif (KEY(5) = '1') and (option_2 = TRUE) then
+         next_state <= TEST_CHAR_4;
+      elsif (KEY(15) = '1') then
+         next_state <= PRINT_MESSAGE;
+	  elsif (KEY(14 downto 0) /= "000000000000000") then
+         next_state <= INCORRECT_CHAR;
+      end if;
+   -- - - - - - - - - - - - - - - - - - - - - - -
+   when TEST_CHAR_4 =>
+      next_state <= TEST_CHAR_4;
+      if (KEY(2) = '1') then
+         next_state <= TEST_CHAR_5;
+      elsif (KEY(15) = '1') then
+         next_state <= PRINT_MESSAGE;
+	  elsif (KEY(14 downto 0) /= "000000000000000") then
+         next_state <= INCORRECT_CHAR;
+      end if;
+   -- - - - - - - - - - - - - - - - - - - - - - -
+   when TEST_CHAR_5 =>
+      next_state <= TEST_CHAR_5;
+      if (KEY(6) = '1') and (option_1 = TRUE) then
+         next_state <= TEST_CHAR_6;
+      elsif (KEY(1) = '1') and (option_2 = TRUE) then
+         next_state <= TEST_CHAR_6;
+      elsif (KEY(15) = '1') then
+         next_state <= PRINT_MESSAGE;
+	  elsif (KEY(14 downto 0) /= "000000000000000") then
+         next_state <= INCORRECT_CHAR;
+      end if;
+   -- - - - - - - - - - - - - - - - - - - - - - -
+   when TEST_CHAR_6 =>
+      next_state <= TEST_CHAR_6;
+      if (KEY(3) = '1') and (option_1 = TRUE) then
+         next_state <= TEST7;
+      elsif (KEY(0) = '1') and (option_2 = TRUE) then
+         next_state <= TEST_CHAR_7;
+      elsif (KEY(15) = '1') then
+         next_state <= PRINT_MESSAGE;
+	  elsif (KEY(14 downto 0) /= "000000000000000") then
+         next_state <= INCORRECT_CHAR;
+      end if;
+   -- - - - - - - - - - - - - - - - - - - - - - -
+   when TEST_CHAR_7 =>
+      next_state <= TEST_CHAR_7;
+      if (KEY(0) = '1')  and (option_1 = TRUE) then
+         next_state <= TEST_CHAR_8;
+		elsif (KEY(2) = '1') and (option_2 = TRUE) then
+         next_state <= TEST_CHAR_8;	
+      elsif (KEY(15) = '1') then
+         next_state <= PRINT_MESSAGE;
+	  elsif (KEY(14 downto 0) /= "000000000000000") then
+         next_state <= INCORRECT_CHAR;
+      end if;
+   -- - - - - - - - - - - - - - - - - - - - - - -
+   when TEST_CHAR_8 =>
+      next_state <= TEST_CHAR_8;
+      if (KEY(0) = '1') and (option_1 = TRUE) then
+         next_state <= TEST_CHAR_9;
+      elsif (KEY(6) = '1') and (option_2 = TRUE) then
+         next_state <= TEST_CHAR_9;
+      elsif (KEY(15) = '1') then
+         next_state <= PRINT_MESSAGE;
+	  elsif (KEY(14 downto 0) /= "000000000000000") then
+         next_state <= INCORRECT_CHAR;
+      end if;
+   -- - - - - - - - - - - - - - - - - - - - - - -
+   when TEST_CHAR_9 =>
+      next_state <= TEST_CHAR_9;
+      if (KEY(8) = '1') and (option_1 = TRUE) then
+         next_state <= TEST_CHAR_10;
+      elsif (KEY(4) = '1') and (option_2 = TRUE) then
+         next_state <= TEST_CHAR_10;
+      elsif (KEY(15) = '1') then
+         next_state <= PRINT_MESSAGE;
+	  elsif (KEY(14 downto 0) /= "000000000000000") then
+         next_state <= INCORRECT_CHAR;
+      end if;
+   -- - - - - - - - - - - - - - - - - - - - - - -
+   when TEST_CHAR_10 =>
+      next_state <= TEST10;
+      if (KEY(2) = '1') and (option_1 = TRUE) then
+         next_state <= TEST_ACCESS;
+      elsif (KEY(4) = '1') and (option_2 = TRUE) then
+         next_state <= TEST_ACCESS;
+      elsif (KEY(15) = '1') then
+         next_state <= PRINT_MESSAGE;
+	  elsif (KEY(14 downto 0) /= "000000000000000") then
+         next_state <= INCORRECT_CHAR;
+      end if;
+   -- - - - - - - - - - - - - - - - - - - - - - -
+   when TEST_ACCESS =>
+      next_state <= TEST_ACCESS;
+      if (KEY(15) = '1') then
+         next_state <= PRINT_ACCESS_GRANTED;
+	  elsif (KEY(14 downto 0) /= "000000000000000") then
+         next_state <= INCORRECT_CHAR;
+      end if;
+   -- - - - - - - - - - - - - - - - - - - - - - -
+   when PRINT_MESSAGE =>
+      next_state <= PRINT_MESSAGE;
+      if (CNT_OF = '1') then
+         next_state <= FINISH;
+      end if;
+   -- - - - - - - - - - - - - - - - - - - - - - -
+	  when INCORRECT_CHAR =>
+      next_state <= INCORRECT_CHAR;
+      if (KEY(15) = '1') then
+         next_state <= PRINT_MESSAGE;
+      end if;
+	-- - - - - - - - - - - - - - - - - - - - - - -	
+   when FINISH =>
+      next_state <= FINISH;
+      if (KEY(15) = '1') then
+         next_state <= TEST1; 
+      end if;
+   -- - - - - - - - - - - - - - - - - - - - - - -
+   when others =>
+   end case;
+end process next_state_logic;
+
+-- -------------------------------------------------------
+output_logic : process(present_state, KEY)
+begin
+   FSM_CNT_CE     <= '0';
+   FSM_MX_MEM     <= '0';
+   FSM_MX_LCD     <= '0';
+   FSM_LCD_WR     <= '0';
+   FSM_LCD_CLR    <= '0';
+
+   case (present_state) is
+   -- - - - - - - - - - - - - - - - - - - - - - -
+   when TEST1 =>
+      if (KEY(14 downto 0) /= "000000000000000") then
+         FSM_LCD_WR     <= '1';
+      end if;
+      if (KEY(15) = '1') then
+         FSM_LCD_CLR    <= '1';
+      end if;
+   -- - - - - - - - - - - - - - - - - - - - - - -
+   when PRINT_MESSAGE =>
+      FSM_CNT_CE     <= '1';
+      FSM_MX_LCD     <= '1';
+      FSM_LCD_WR     <= '1';
+	-- - - - - - - - - - - - - - - - - - - - - - -	
+	when PRINT_ACCESS_GRANTED =>
+      FSM_CNT_CE     <= '1';
+      FSM_MX_LCD     <= '1';
+      FSM_LCD_WR     <= '1';
+	   FSM_MX_MEM     <= '1';
+   -- - - - - - - - - - - - - - - - - - - - - - -
+   when FINISH =>
+      if (KEY(15) = '1') then
+         FSM_LCD_CLR    <= '1';
+      end if;
+   -- - - - - - - - - - - - - - - - - - - - - - -
+   when others =>
+   end case;
+end process output_logic;
+
+end architecture behavioral;
+
