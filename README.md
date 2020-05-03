@@ -1,14 +1,14 @@
 # VUT_FIT_INC_Project
 
 
-zadání - Task of subject.
+zadání.pdf - Task of subject.
 
 fsm.vhd - Binary code.
 
-zprava - Including graph in PDF.
+zprava.pdf - Report of project.
 
 xmisti00.zip - File that is sent to system as final product.
 
-prezentace - Explanation of project.
+prezentace.pdf - Explanation of project.
 
-kód - codes I need to display on FITKIT.
+kod.docx - codes I need to display on FITKIT.
