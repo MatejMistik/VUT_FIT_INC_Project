@@ -3,14 +3,12 @@
 
 zadání - Task of subject.
 
-accterm.bin - ( Result of compiling needed for final grade of project)
-
-fsm.vhd - Binary
+fsm.vhd - Binary code.
 
 zprava - Including graph in PDF.
 
 xmisti00.zip - File that is sent to system as final product.
 
-prezentace - Explanation of project
+prezentace - Explanation of project.
 
-kód - codes I need to display on FITKIT
+kód - codes I need to display on FITKIT.
