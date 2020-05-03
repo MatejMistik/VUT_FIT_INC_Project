@@ -50,120 +50,120 @@ begin
    -- - - - - - - - - - - - - - - - - - - - - - -
    when CHAR_1 =>
       next_state <= CHAR_1;
-      if (KEY(1) = '1') then
-		 option := TRUE ;
-         next_state <= CHAR_2;
+      if (KEY(15) = '1') then
+         next_state <= ACCESS_DENIED;	
       elsif (KEY(3) = '1') then
 		 option := FALSE ;
          next_state <= CHAR_2;
-      elsif (KEY(15) = '1') then
-         next_state <= ACCESS_DENIED;
+      elsif (KEY(1) = '1') then
+		 option := TRUE ;
+         next_state <= CHAR_2;
 	  elsif (KEY(14 downto 0) /= "000000000000000") then
          next_state <= INCORRECT_CHAR;
       end if;
    -- - - - - - - - - - - - - - - - - - - - - - -
    when CHAR_2 =>
       next_state <= CHAR_2;
-      if (KEY(9) = '1') and (option = TRUE ) then
-         next_state <= CHAR_3;
+      if (KEY(15) = '1') then
+         next_state <= ACCESS_DENIED;
       elsif (KEY(4) = '1') and (option = FALSE) then
          next_state <= CHAR_3;
-      elsif (KEY(15) = '1') then
-         next_state <= ACCESS_DENIED;
+      elsif (KEY(9) = '1') and (option = TRUE ) then
+         next_state <= CHAR_3;
 	  elsif (KEY(14 downto 0) /= "000000000000000") then
          next_state <= INCORRECT_CHAR;
       end if;
    -- - - - - - - - - - - - - - - - - - - - - - -
    when CHAR_3 =>
       next_state <= CHAR_3;
-      if (KEY(7) = '1') and (option = TRUE) then
-         next_state <= CHAR_4;
+      if (KEY(15) = '1') then
+         next_state <= ACCESS_DENIED;
       elsif (KEY(5) = '1') and (option = FALSE) then
          next_state <= CHAR_4;
-      elsif (KEY(15) = '1') then
-         next_state <= ACCESS_DENIED;
+      elsif (KEY(7) = '1') and (option = TRUE) then
+         next_state <= CHAR_4;
 	  elsif (KEY(14 downto 0) /= "000000000000000") then
          next_state <= INCORRECT_CHAR;
       end if;
    -- - - - - - - - - - - - - - - - - - - - - - -
    when CHAR_4 =>
       next_state <= CHAR_4;
-      if (KEY(2) = '1') then
-         next_state <= CHAR_5;
-      elsif (KEY(15) = '1') then
+      if (KEY(15) = '1') then
          next_state <= ACCESS_DENIED;
+      elsif (KEY(2) = '1') then
+         next_state <= CHAR_5;
 	  elsif (KEY(14 downto 0) /= "000000000000000") then
          next_state <= INCORRECT_CHAR;
       end if;
    -- - - - - - - - - - - - - - - - - - - - - - -
    when CHAR_5 =>
       next_state <= CHAR_5;
-      if (KEY(6) = '1') and (option = TRUE) then
-         next_state <= CHAR_6;
+      if (KEY(15) = '1') then
+         next_state <= ACCESS_DENIED;
       elsif (KEY(1) = '1') and (option = FALSE) then
          next_state <= CHAR_6;
-      elsif (KEY(15) = '1') then
-         next_state <= ACCESS_DENIED;
+      elsif (KEY(6) = '1') and (option = TRUE) then
+         next_state <= CHAR_6;
 	  elsif (KEY(14 downto 0) /= "000000000000000") then
          next_state <= INCORRECT_CHAR;
       end if;
    -- - - - - - - - - - - - - - - - - - - - - - -
    when CHAR_6 =>
       next_state <= CHAR_6;
-      if (KEY(3) = '1') and (option = TRUE) then
-         next_state <= CHAR_7;
+      if (KEY(15) = '1') then
+         next_state <= ACCESS_DENIED;
       elsif (KEY(0) = '1') and (option = FALSE) then
          next_state <= CHAR_7;
-      elsif (KEY(15) = '1') then
-         next_state <= ACCESS_DENIED;
+      elsif (KEY(3) = '1') and (option = TRUE) then
+         next_state <= CHAR_7;
 	  elsif (KEY(14 downto 0) /= "000000000000000") then
          next_state <= INCORRECT_CHAR;
       end if;
    -- - - - - - - - - - - - - - - - - - - - - - -
    when CHAR_7 =>
       next_state <= CHAR_7;
-      if (KEY(0) = '1')  and (option = TRUE) then
-         next_state <= CHAR_8;
+      if (KEY(15) = '1') then
+         next_state <= ACCESS_DENIED;
 		elsif (KEY(2) = '1') and (option = FALSE) then
          next_state <= CHAR_8;	
-      elsif (KEY(15) = '1') then
-         next_state <= ACCESS_DENIED;
+      elsif (KEY(0) = '1')  and (option = TRUE) then
+         next_state <= CHAR_8;
 	  elsif (KEY(14 downto 0) /= "000000000000000") then
          next_state <= INCORRECT_CHAR;
       end if;
    -- - - - - - - - - - - - - - - - - - - - - - -
    when CHAR_8 =>
       next_state <= CHAR_8;
-      if (KEY(0) = '1') and (option = TRUE) then
-         next_state <= CHAR_9;
+      if (KEY(15) = '1') then
+         next_state <= ACCESS_DENIED;
       elsif (KEY(6) = '1') and (option = FALSE) then
          next_state <= CHAR_9;
-      elsif (KEY(15) = '1') then
-         next_state <= ACCESS_DENIED;
+      elsif (KEY(0) = '1') and (option = TRUE) then
+         next_state <= CHAR_9;
 	  elsif (KEY(14 downto 0) /= "000000000000000") then
          next_state <= INCORRECT_CHAR;
       end if;
    -- - - - - - - - - - - - - - - - - - - - - - -
    when CHAR_9 =>
       next_state <= CHAR_9;
-      if (KEY(8) = '1') and (option = TRUE) then
-         next_state <= CHAR_10;
+      if (KEY(15) = '1') then
+         next_state <= ACCESS_DENIED;
       elsif (KEY(4) = '1') and (option = FALSE) then
          next_state <= CHAR_10;
-      elsif (KEY(15) = '1') then
-         next_state <= ACCESS_DENIED;
+      elsif (KEY(8) = '1') and (option = TRUE) then
+         next_state <= CHAR_10;
 	  elsif (KEY(14 downto 0) /= "000000000000000") then
          next_state <= INCORRECT_CHAR;
       end if;
    -- - - - - - - - - - - - - - - - - - - - - - -
    when CHAR_10 =>
       next_state <= CHAR_10;
-      if (KEY(2) = '1') and (option = TRUE) then
-         next_state <= TEST_ACCESS;
+      if (KEY(15) = '1') then
+         next_state <= ACCESS_DENIED;
       elsif (KEY(4) = '1') and (option = FALSE) then
          next_state <= TEST_ACCESS;
-      elsif (KEY(15) = '1') then
-         next_state <= ACCESS_DENIED;
+      elsif (KEY(2) = '1') and (option = TRUE) then
+         next_state <= TEST_ACCESS;
 	  elsif (KEY(14 downto 0) /= "000000000000000") then
          next_state <= INCORRECT_CHAR;
       end if;
